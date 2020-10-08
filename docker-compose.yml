@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  tideways:
+    image: quay.io/inviqa_images/tideways
+    build: .

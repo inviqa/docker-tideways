@@ -21,4 +21,4 @@ RUN useradd --system tideways \
 EXPOSE 9135
 USER tideways
 
-ENTRYPOINT ["tideways-daemon", "--address=0.0.0.0:9135", "--hostname=$TIDEWAYS_HOSTNAME"]
+ENTRYPOINT ["/bin/sh", "-c", "tideways-daemon --address=0.0.0.0:9135 --hostname=$TIDEWAYS_HOSTNAME"]

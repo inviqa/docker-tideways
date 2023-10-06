@@ -4,7 +4,8 @@ ARG TIDEWAYS_ENVIRONMENT_DEFAULT=production
 ENV TIDEWAYS_ENVIRONMENT=$TIDEWAYS_ENVIRONMENT_DEFAULT
 ENV TIDEWAYS_HOSTNAME=tideways-daemon
 
-RUN apt-get update \
+RUN useradd --system tideways \
+ && apt-get update \
  && apt-get install -yq --no-install-recommends \
     ca-certificates \
     curl \
@@ -17,4 +18,7 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENTRYPOINT ["/bin/sh", "-c", "exec tideways-daemon --address=0.0.0.0:9135 --hostname=$TIDEWAYS_HOSTNAME"]
+EXPOSE 9135
+USER tideways
+
+ENTRYPOINT ["/bin/sh", "-c", "tideways-daemon --address=0.0.0.0:9135 --hostname=$TIDEWAYS_HOSTNAME"]
